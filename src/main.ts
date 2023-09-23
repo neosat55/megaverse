@@ -1,8 +1,7 @@
 import { Megaverse } from './Megaverse.js';
 
-const run = () => {
-  const godId = 'c02b8fd8-99d8-4bcf-b12a-486df366de89';
-  const universe = new Megaverse(godId);
+const run = (candidateId: string) => {
+  const universe = new Megaverse(candidateId);
 
   return {
     create: async () => {
@@ -30,14 +29,15 @@ const run = () => {
 };
 
 const args = process.argv.slice(2);
-const command = args[0];
+const candidateId = args[0];
+const command = args[1];
 
 if (!command) {
   throw new Error('You should pick one command: `create` or `delete`');
 }
 
-(async (command: string) => {
-  const cli = run();
+(async (candidateId: string, command: string) => {
+  const cli = run(candidateId);
 
   await cli[command]();
-})(command);
+})(candidateId, command);
